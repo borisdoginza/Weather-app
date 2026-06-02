@@ -1,0 +1,71 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* * {
+  margin: 0;
+} */
+
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+img, picture, video, canvas {
+  display: block;
+  max-width: 100%;
+}
+
+input, button, textarea, select {
+  font: inherit;
+}
+
+/* 1. Высота документа и плавный скролл */
+html {
+  scroll-behavior: smooth;
+  height: 100%;
+}
+
+/* 2. Убрать стили у списков (если используются как навигация) */
+ul, ol {
+  list-style: none;
+  padding: 0;
+}
+
+/* 3. Переносы длинных слов */
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+
+/* 4. Нормализация svg */
+svg {
+  display: block;
+}
+
+/* 5. Убрать дефолтные стили у кнопок */
+button {
+  border: none;
+  cursor: pointer;
+}
+
+/* 6. Убрать outline только для мышки (важно для a11y!) */
+:focus-visible {
+  outline: 2px solid currentColor;
+}
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* 7. Таблицы */
+table {
+  border-collapse: collapse;
+}
+
+/* 8. Убрать анимации для пользователей с вестибулярными нарушениями */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
