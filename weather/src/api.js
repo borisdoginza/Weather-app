@@ -16,13 +16,19 @@ export async function handleGeoSearch(query) {
     }
 }
 
-export async function handleWeatherSearch(latitude, longitude) {
-    const weatherResponse = await fetch(`https://api.open-meteo.com/v1/forecast?daily=temperature_2m_max,temperature_2m_min,weather_code&hourly=temperature_2m,weather_code&current=temperature_2m,weather_code,apparent_temperature,relative_humidity_2m,precipitation,wind_speed_10m&timezone=auto&latitude=${latitude}&longitude=${longitude}`);
+// export async function handleWeatherSearch(latitude, longitude) {
+//     const weatherResponse = await fetch(`https://api.open-meteo.com/v1/forecast?daily=temperature_2m_max,temperature_2m_min,weather_code&hourly=temperature_2m,weather_code&current=temperature_2m,weather_code,apparent_temperature,relative_humidity_2m,precipitation,wind_speed_10m&timezone=auto&latitude=${latitude}&longitude=${longitude}`);
+//     const weatherData = await weatherResponse.json();
+//     console.log(weatherData);
+//     return weatherData;
+// }
+
+export async function handleWeatherSearch(latitude, longitude, units) {
+    const weatherResponse = await fetch(`https://api.open-meteo.com/v1/forecast?daily=temperature_2m_max,temperature_2m_min,weather_code&hourly=temperature_2m,weather_code&current=temperature_2m,weather_code,apparent_temperature,relative_humidity_2m,precipitation,wind_speed_10m&wind_speed_unit=${units.windSpeed}&temperature_unit=${units.temperature}&precipitation_unit=${units.precipitation}&timezone=auto&latitude=${latitude}&longitude=${longitude}`);
     const weatherData = await weatherResponse.json();
     console.log(weatherData);
     return weatherData;
 }
-
 
 
 

@@ -15,7 +15,7 @@ const mainElement = document.getElementById('main');
 const mainTitleElement = document.getElementById('main-title');
 
 
-export async function renderWeatherData(weatherData, result) {
+export async function renderWeatherData(weatherData, result, units) {
     if (!result?.results?.length) {
         console.error('Geo search returned no results', result);
         return;
@@ -27,8 +27,8 @@ export async function renderWeatherData(weatherData, result) {
     temperatureElement.textContent = `${weatherData.current.temperature_2m.toFixed(0)}°`;
     feelsLikeElement.textContent = `${weatherData.current.apparent_temperature.toFixed(0)}°`;
     humidityElement.textContent = `${weatherData.current.relative_humidity_2m}%`;
-    precipitationElement.textContent = `${weatherData.current.precipitation} in`;
-    windSpeedElement.textContent = `${weatherData.current.wind_speed_10m.toFixed(0)} mph`;
+    precipitationElement.textContent = `${weatherData.current.precipitation} ${units.precipitation.slice(0,2)}`;
+    windSpeedElement.textContent = `${weatherData.current.wind_speed_10m.toFixed(0)} ${units.windSpeed}`;
     weatherIconElement.src = getWeatherIcon(weatherData.current.weather_code);
 
     mainElement.style.display = 'flex';
@@ -112,7 +112,7 @@ export function findHourlyForecastIndex(weatherData) {
 
 // Search input handling
 
-export function renderSearchOptions(options) {
+export function renderSearchOptions(options, units) {
     const searchOptionsContainer = document.getElementById('search_options_container');
     if (!options?.length) {
         searchOptionsContainer.style.opacity = '0';
@@ -135,8 +135,8 @@ export function renderSearchOptions(options) {
             const country = element.getAttribute('data-country');
             searchOptionsContainer.style.opacity = '0';
             searchOptionsContainer.style.pointerEvents = 'none';
-            handleWeatherSearch(latitude, longitude).then(weatherData => {
-                renderWeatherData(weatherData, { results: [{ name, country }] });
+            handleWeatherSearch(latitude, longitude, units).then(weatherData => {
+                renderWeatherData(weatherData, { results: [{ name, country }], }, units);
                 renderDailyForecast(weatherData);
                 renderHourlyForecast(weatherData);
                 renderHourlyDaySelection(weatherData);
@@ -182,5 +182,7 @@ export function createhourlyForecastDayCards(weatherData, i){
         : formatDate(weatherData.daily.time[i], { weekday: 'long' });
     return `<button data-day-index="${i}" class="text-left px-2 py-1.5 rounded-lg text-neutral-0 text-sm hover:bg-neutral-800">${label}</button>`;
 }
+
+
 
 
